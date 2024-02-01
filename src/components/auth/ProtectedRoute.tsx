@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { ReactNode } from 'react';
+import { Navigate } from 'react-router-dom';
 
 interface IProps {
   isAllowed: boolean;

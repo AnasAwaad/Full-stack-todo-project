@@ -9,6 +9,8 @@ import { IFormInput, IResponse } from '../interfaces';
 import axios, { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 // import { useState } from 'react';
 
 const registerSchema = yup
@@ -23,8 +25,9 @@ const registerSchema = yup
   .required();
 
 /* ------------ STATE ------------ */
-
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -44,6 +47,7 @@ const RegisterPage = () => {
       const { status } = await axios.post('http://localhost:1337/api/auth/local/register', data);
       if (status == 200) {
         toast.success("Congratulations! You've successfully registered 🎉");
+        navigate('/login');
       }
     } catch (error) {
       const errorObj = error as AxiosError<IResponse>;

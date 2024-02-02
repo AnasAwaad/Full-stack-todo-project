@@ -8,6 +8,16 @@ export interface IRegisterInput {
   };
 }
 
+export interface ILoginInput {
+  placeholder: string;
+  name: 'identifier' | 'password';
+  validation: {
+    required?: boolean;
+    minLength?: number;
+    pattern?: RegExp;
+  };
+}
+
 export interface IFormInput {
   username: string;
   email: string;

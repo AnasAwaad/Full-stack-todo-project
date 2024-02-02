@@ -7,8 +7,9 @@ import HomePage from '../pages';
 import LoginPage from '../pages/Login';
 import RegisterPage from '../pages/Register';
 
-const isLoggedIn = false; //{isLoggedIn ? <HomePage /> : <Navigate to="/login" />}
-const userData: { email: string } | null = isLoggedIn ? { email: 'email@gmail.com' } : null;
+const userInfo = JSON.parse(`${localStorage.getItem('userInfo')}`);
+const isLoggedIn = userInfo ? true : false;
+console.log(userInfo);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,7 +19,7 @@ const router = createBrowserRouter(
         <Route
           index
           element={
-            <ProtectedRoute isAllowed={isLoggedIn} redirectPath="/login" data={userData}>
+            <ProtectedRoute isAllowed={isLoggedIn} redirectPath="/login" data={userInfo}>
               <HomePage />
             </ProtectedRoute>
           }
@@ -26,7 +27,7 @@ const router = createBrowserRouter(
         <Route
           path="login"
           element={
-            <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/" data={userData}>
+            <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/" data={userInfo}>
               <LoginPage />
             </ProtectedRoute>
           }
@@ -34,7 +35,7 @@ const router = createBrowserRouter(
         <Route
           path="register"
           element={
-            <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/login" data={userData}>
+            <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/login" data={userInfo}>
               <RegisterPage />
             </ProtectedRoute>
           }

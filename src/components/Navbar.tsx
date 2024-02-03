@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   const userInfo = JSON.parse(`${localStorage.getItem('userInfo')}`);
-  console.log(userInfo);
 
   const onLogOut = () => {
     toast.loading('you are logout after 2 sec');

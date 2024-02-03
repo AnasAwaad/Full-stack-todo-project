@@ -9,7 +9,6 @@ import RegisterPage from '../pages/Register';
 
 const userInfo = JSON.parse(`${localStorage.getItem('userInfo')}`);
 const isLoggedIn = userInfo ? true : false;
-console.log(userInfo);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +36,14 @@ const router = createBrowserRouter(
           element={
             <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/login" data={userInfo}>
               <RegisterPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute isAllowed={isLoggedIn} redirectPath="/login" data={userInfo}>
+              <h2>profile page</h2>
             </ProtectedRoute>
           }
         />

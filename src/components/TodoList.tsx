@@ -1,29 +1,26 @@
-import { useEffect, useState } from 'react';
+import useAuthontication from '../Hooks/useAuthonticationToken';
 import Button from './ui/Button';
-import axios from 'axios';
 
 interface ITodo {
-  id: string;
+  id: number;
   title: string;
 }
 const TodoList = () => {
-  const [todos, setTodos] = useState<ITodo[]>([]);
   const userInfo = JSON.parse(localStorage.getItem('userInfo') + '');
-  useEffect(() => {
-    axios
-      .get('http://localhost:1337/api/users/me?populate=todos', {
-        headers: {
-          Authorization: `Bearer ${userInfo.jwt}`,
-        },
-      })
-      .then((response) => {
-        setTodos(response.data.todos);
-      })
-      .catch((err) => console.log(err));
-  }, [userInfo.jwt]);
+  const { data, isLoading } = useAuthontication({
+    queryKey: ['todos'],
+    config: {
+      headers: {
+        Authorization: `Bearer ${userInfo.jwt}`,
+      },
+    },
+  });
+  console.log(data);
 
-  const renderTodos = todos.map((item) => {
-    return (
+  if (isLoading) return <h2>'Loading...'</h2>;
+
+  const renderTodos = data.todos.length ? (
+    data.todos.map((item: ITodo) => (
       <div key={item.id} className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100">
         <p className="w-full font-semibold">{item.title}</p>
         <div className="flex items-center justify-end w-full space-x-3">
@@ -33,8 +30,11 @@ const TodoList = () => {
           </Button>
         </div>
       </div>
-    );
-  });
+    ))
+  ) : (
+    <div>no todos exsit</div>
+  );
+
   return <div className="space-y-1 ">{renderTodos}</div>;
 };
 

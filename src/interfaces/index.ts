@@ -29,3 +29,15 @@ export interface IResponse {
     message?: string;
   };
 }
+
+export interface ITodo {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export interface ITodoFromInput {
+  id: number;
+  title: string;
+  description: string;
+}
